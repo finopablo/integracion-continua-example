@@ -20,6 +20,7 @@ public class Persona {
 	
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id_persona" , unique = true, nullable=false)
 	public int getId() {
 		return this.id;
@@ -48,7 +49,8 @@ public class Persona {
 	
 	@Column(name="edad", nullable = true)
 	public int getEdad() {
-		return edad;
+		Date d = new Date();
+		return d.
 	}
 	public void setEdad(int edad) {
 		this.edad = edad;
