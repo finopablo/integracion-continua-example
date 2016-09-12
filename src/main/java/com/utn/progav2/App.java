@@ -17,7 +17,6 @@ public class App
     {
 		    Session session = HibernateUtil.getSessionFactory().openSession();
 		    session.beginTransaction();
-
     		Persona p = new Persona();
     		p.setNombre("Pablo");
     		p.setApellido("Fino");
