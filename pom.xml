@@ -7,8 +7,7 @@
 	<version>1.1-SNAPSHOT</version>
 	<name>integracion-continua</name>
 	<url>http://maven.apache.org</url>
-
-<!--	<build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -16,9 +15,8 @@
 				<version>1.1.1</version>
 				<executions>
 					<execution>
-						<phase>verify</phase>
 						<goals>
-							<goal>java</goal>
+							<goal>exec</goal>
 						</goals>
 						<configuration>
 							<mainClass>com.utn.progav2.App</mainClass>
@@ -27,7 +25,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>-->
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
