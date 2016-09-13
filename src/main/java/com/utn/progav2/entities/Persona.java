@@ -1,8 +1,11 @@
 package com.utn.progav2.entities;
 
-import java.util.Date;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "personas")
@@ -11,7 +14,7 @@ public class Persona {
 	private int id;
 	private String nombre;
 	private String apellido;
-	private int edad;
+	private long edad;
 	private Date fechaNacimiento;
 	
 	
@@ -20,6 +23,7 @@ public class Persona {
 	
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id_persona" , unique = true, nullable=false)
 	public int getId() {
 		return this.id;
@@ -47,10 +51,16 @@ public class Persona {
 	}
 	
 	@Column(name="edad", nullable = true)
-	public int getEdad() {
-		return edad;
+	public long getEdad() {
+		long today = new Date().getTime();
+		long fechaNac = this.getFechaNacimiento().getTime();
+		long diff = (today - fechaNac);
+		long year = (1000L*60L*60L*24L*365L);
+		return diff / year ;
+
 	}
-	public void setEdad(int edad) {
+
+	public void setEdad(long edad) {
 		this.edad = edad;
 	}
 	@Column(name="fecha_nacimiento", nullable = true)
