@@ -1,6 +1,7 @@
 package com.utn.progav2.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -10,14 +11,13 @@ import java.util.Date;
 @Entity
 @Table(name = "personas")
 public class Persona {
-	
+
 	private int id;
 	private String nombre;
 	private String apellido;
 	private long edad;
 	private Date fechaNacimiento;
-	
-	
+
 	public Persona(){
 	}
 	

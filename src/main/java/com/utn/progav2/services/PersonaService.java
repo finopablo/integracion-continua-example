@@ -4,15 +4,22 @@ import com.utn.progav2.entities.Persona;
 import com.utn.progav2.persistence.PersonaDao;
 import com.utn.progav2.util.HibernateUtil;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by pablo on 12/09/16.
  */
+@Service
 public class PersonaService {
 
+  @Autowired
   PersonaDao personaDao;
 
   public PersonaService() {
@@ -26,19 +33,20 @@ public class PersonaService {
 
 
   public Persona getPersona(int id) {
-      return this.getPersona(id);
+      return personaDao.getById(id);
   }
 
-  public void save(Persona p) {
+  public void newPersona(String nombre, String apellido, String fechaNacimiento)  throws ParseException  {
+      Persona p = new Persona();
+      p.setApellido(apellido);
+      p.setNombre(nombre);
+      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+      p.setFechaNacimiento(sdf.parse(fechaNacimiento));
       this.personaDao.save(p);
   }
 
-  public Persona newPersona(String nombre, String apellido, Date fechaNacimiento ) {
-      Persona p = new Persona();
-      p.setNombre(nombre);
-      p.setApellido(apellido);
-      p.setFechaNacimiento(fechaNacimiento);
-      return p;
+  public List<Persona> getByApellido(String surname) {
+    return personaDao.getBySurname(surname);
   }
 
 }

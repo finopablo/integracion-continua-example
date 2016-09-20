@@ -11,6 +11,7 @@ import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -19,11 +20,15 @@ import java.util.Date;
  */
 public class App
 {
-    public static void main( String[] args) throws Exception
+ /*   public static void main( String[] args) throws Exception
     {
 			PersonaService service = new PersonaService();
       SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Persona p = service.newPersona("Pablo", "Fino", format.parse("17-05-1980"));
 			service.save(p);
-    }
+
+      List<Persona> list = service.getByApellido("Fino");
+      System.out.println(list);
+
+    }*/
 }

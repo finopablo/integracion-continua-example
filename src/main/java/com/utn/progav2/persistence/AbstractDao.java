@@ -14,8 +14,7 @@ public abstract class AbstractDao<K> {
   protected SessionFactory sessionFactory;
 
   public AbstractDao(SessionFactory sessionFactory) {
-
-    this.sessionFactory = HibernateUtil.getSessionFactory();
+    this.sessionFactory = sessionFactory;
   }
 
   abstract List<K> getAll();
