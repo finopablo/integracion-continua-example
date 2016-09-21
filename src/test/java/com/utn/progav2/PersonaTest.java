@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 public class PersonaTest  extends  TestCase {
 
       Persona persona;
+
       @Before
       public void setUp() throws ParseException {
             persona = new Persona();

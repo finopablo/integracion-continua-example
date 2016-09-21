@@ -18,11 +18,9 @@ import java.util.List;
  * Hello world!
  *
  */
-public class App
-{
- /*   public static void main( String[] args) throws Exception
-    {
-			PersonaService service = new PersonaService();
+public class App {
+  public static void main(String[] args) throws Exception {
+			/*PersonaService service = new PersonaService();
       SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 			Persona p = service.newPersona("Pablo", "Fino", format.parse("17-05-1980"));
 			service.save(p);
@@ -31,4 +29,5 @@ public class App
       System.out.println(list);
 
     }*/
+  }
 }

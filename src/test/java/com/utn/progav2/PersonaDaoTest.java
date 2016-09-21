@@ -43,6 +43,7 @@ public class PersonaDaoTest extends TestCase {
 
   @Before
   public void setUp() throws ParseException {
+
     Persona p = new Persona();
     p.setApellido("Apellido");
     p.setNombre("Nombre");
@@ -58,6 +59,7 @@ public class PersonaDaoTest extends TestCase {
       when(query.list()).thenReturn(list);
       when(sessionFactory.openSession()).thenReturn(session);
       when(session.get(Persona.class, 10)).thenReturn(p);
+      when(session.get(Persona.class, 11)).thenReturn(null);
       dao = new PersonaDao(sessionFactory);
     } catch(Exception e) {
       e.printStackTrace();
@@ -84,6 +86,17 @@ public class PersonaDaoTest extends TestCase {
   public void testGetById() {
     Persona p = dao.getById(10);
     assertEquals(p.getApellido(), "Apellido");
+  }
+
+  @Test
+  public void testGetByIdErrir() {
+    Persona p = null;
+
+      p = dao.getById(11);
+      assertTrue(p==null);
+
+
+
   }
 
 }
