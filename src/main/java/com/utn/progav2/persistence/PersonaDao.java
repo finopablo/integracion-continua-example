@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by pablo on 12/09/16.
  */
+@Profile("prod")
 @Repository
 public class PersonaDao extends  AbstractDao<Persona> {
 

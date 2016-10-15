@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.utn.progav2</groupId>
 	<artifactId>integracion-continua</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>1.1-SNAPSHOT</version>
 	<name>integracion-continua</name>
 	<url>http://maven.apache.org</url>

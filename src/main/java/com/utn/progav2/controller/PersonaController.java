@@ -1,11 +1,14 @@
 package com.utn.progav2.controller;
 
 import com.utn.progav2.converter.PersonaConverter;
+import com.utn.progav2.converter.PersonaConverterInterface;
 import com.utn.progav2.entities.Persona;
 import com.utn.progav2.request.PersonaRequest;
 import com.utn.progav2.response.PersonaWrapper;
 import com.utn.progav2.services.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +22,21 @@ import java.util.List;
 /**
  * Created by pablo on 20/09/16.
  */
-
+@Profile("prod")
 @RestController
 @RequestMapping(
     value = "/api",
     produces = MediaType.APPLICATION_JSON_VALUE
 )
-public class PersonaController {
+public class PersonaController implements PersonaControllerInterface {
 
 
   @Autowired
   PersonaService personaService;
+
   @Autowired
-  PersonaConverter converter;
+  @Qualifier("uglyConverter")
+  PersonaConverterInterface converter;
 
   @RequestMapping("/persona/{id}")
     public @ResponseBody PersonaWrapper getById(@PathVariable("id") int id) {

@@ -33,5 +33,4 @@ public class PersonaRequest {
     String apellido;
     String fechaNacimiento;
 
-
 }
