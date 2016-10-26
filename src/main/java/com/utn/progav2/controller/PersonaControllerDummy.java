@@ -1,9 +1,9 @@
 package com.utn.progav2.controller;
 
-import com.utn.progav2.entities.Persona;
 import com.utn.progav2.request.PersonaRequest;
 import com.utn.progav2.response.PersonaWrapper;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,22 +25,22 @@ public class PersonaControllerDummy implements PersonaControllerInterface {
 
 
     @RequestMapping("/persona/{id}")
-    public @ResponseBody PersonaWrapper getById(@PathVariable("id") int id) {
+    public @ResponseBody ResponseEntity<PersonaWrapper> getById(@PathVariable("id") int id) {
         PersonaWrapper p  = new PersonaWrapper();
         p.setApellido("HOLA");
         p.setNombre("pero");
         p.setEdad(10);
         p.setFechaNacimiento("12/06/2001");
-        return p;
+        return new ResponseEntity<PersonaWrapper>(p, HttpStatus.OK);
     }
 
     @Override
-    public List<PersonaWrapper> getAll() {
-        return new ArrayList<PersonaWrapper>();
+    public ResponseEntity<List<PersonaWrapper>> getAll() {
+        return new ResponseEntity<List<PersonaWrapper>>(new ArrayList<PersonaWrapper>(), HttpStatus.OK);
     }
 
     @Override
-    public List<PersonaWrapper> getBySurname(String apellido) {
+    public ResponseEntity<List<PersonaWrapper>> getBySurname(String apellido) {
         PersonaWrapper p  = new PersonaWrapper();
         p.setApellido("HOLA");
         p.setNombre("pero");
@@ -48,7 +48,7 @@ public class PersonaControllerDummy implements PersonaControllerInterface {
         p.setFechaNacimiento("12/06/2001");
         List<PersonaWrapper> l = new ArrayList<PersonaWrapper>();
         l.add(p);
-        return l;
+        return new ResponseEntity<List<PersonaWrapper>>(l,HttpStatus.OK);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.utn.progav2.controller;
 
-import com.utn.progav2.converter.PersonaConverter;
 import com.utn.progav2.converter.PersonaConverterInterface;
 import com.utn.progav2.entities.Persona;
 import com.utn.progav2.request.PersonaRequest;
@@ -12,10 +11,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,22 +36,38 @@ public class PersonaController implements PersonaControllerInterface {
   PersonaConverterInterface converter;
 
   @RequestMapping("/persona/{id}")
-    public @ResponseBody PersonaWrapper getById(@PathVariable("id") int id) {
-      return converter.convert(personaService.getPersona(id));
+    public @ResponseBody ResponseEntity<PersonaWrapper> getById(@PathVariable("id") int id){
+    Persona per = personaService.getPersona(id);
+
+    if (per!=null) {
+      PersonaWrapper p = converter.convert(per);
+      return  new ResponseEntity<PersonaWrapper>(p,HttpStatus.OK);
+    } else {
+      return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
   }
 
-  @RequestMapping("/personas/")
-  public @ResponseBody List<PersonaWrapper> getAll() {
-    return this.convertList(personaService.getAll());
+  @RequestMapping("/persona/")
+  public @ResponseBody  ResponseEntity<List<PersonaWrapper>> getAll() {
+    List<Persona> list = personaService.getAll();
+    if (list.size()>0) {
+      return new ResponseEntity<List<PersonaWrapper>>(this.convertList(list), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<List<PersonaWrapper>>(HttpStatus.NO_CONTENT);
+    }
   }
 
-  @RequestMapping("/personas/apellido/{ape}")
-  public List<PersonaWrapper> getBySurname(@PathVariable("ape") String apellido) {
-    return this.convertList(personaService.getByApellido(apellido));
+  @RequestMapping(value = "/persona", method = RequestMethod.GET)
+  public ResponseEntity<List<PersonaWrapper>> getBySurname(@RequestParam ("ape") String apellido) {
+    List<Persona> list = personaService.getByApellido(apellido);
+    if (list.size()>0) {
+      return new ResponseEntity<List<PersonaWrapper>>(this.convertList(list), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<List<PersonaWrapper>>(HttpStatus.NO_CONTENT);
+    }
   }
 
-
-  @RequestMapping(value = "/persona", method = RequestMethod.POST)
+  @RequestMapping(value = "/persona", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity addPersona(@RequestBody PersonaRequest request) {
     try {
       personaService.newPersona(request.getNombre(), request.getApellido(), request.getFechaNacimiento());

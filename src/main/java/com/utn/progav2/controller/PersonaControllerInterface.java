@@ -17,9 +17,9 @@ public interface PersonaControllerInterface {
 
 
 
-    PersonaWrapper getById( int id);
-    List<PersonaWrapper> getAll();
-    List<PersonaWrapper> getBySurname(String apellido) ;
+    ResponseEntity<PersonaWrapper> getById( int id);
+    ResponseEntity<List<PersonaWrapper>> getAll();
+    ResponseEntity<List<PersonaWrapper>> getBySurname(String apellido) ;
     ResponseEntity addPersona(PersonaRequest request);
 
 
