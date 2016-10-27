@@ -38,5 +38,4 @@ public class PersonaRequest {
     String apellido;
   @JsonProperty("fecha-nacimiento")
     String fechaNacimiento;
-
 }

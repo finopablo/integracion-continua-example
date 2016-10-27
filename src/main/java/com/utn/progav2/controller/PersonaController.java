@@ -38,7 +38,6 @@ public class PersonaController implements PersonaControllerInterface {
   @RequestMapping("/persona/{id}")
     public @ResponseBody ResponseEntity<PersonaWrapper> getById(@PathVariable("id") int id){
     Persona per = personaService.getPersona(id);
-
     if (per!=null) {
       PersonaWrapper p = converter.convert(per);
       return  new ResponseEntity<PersonaWrapper>(p,HttpStatus.OK);
@@ -71,7 +70,7 @@ public class PersonaController implements PersonaControllerInterface {
   public ResponseEntity addPersona(@RequestBody PersonaRequest request) {
     try {
       personaService.newPersona(request.getNombre(), request.getApellido(), request.getFechaNacimiento());
-      return new ResponseEntity(HttpStatus.ACCEPTED);
+      return new ResponseEntity(HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
