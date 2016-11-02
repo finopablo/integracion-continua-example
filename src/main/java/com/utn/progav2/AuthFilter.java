@@ -11,10 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.utn.progav2.util.AuthenticationData;
 import com.utn.progav2.util.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 

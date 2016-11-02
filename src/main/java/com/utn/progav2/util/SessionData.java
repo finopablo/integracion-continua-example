@@ -1,12 +1,18 @@
 package com.utn.progav2.util;
 
 import com.utn.progav2.entities.Usuario;
+import groovy.util.logging.Slf4j;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.hibernate.id.GUIDGenerator;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -15,7 +21,7 @@ import java.util.UUID;
 @Service
 public class SessionData {
 
-
+    final static Logger logger = Logger.getLogger(SessionData.class);
     HashMap<String, AuthenticationData> sessionData;
 
     @Value("${session.expiration}")
@@ -43,14 +49,22 @@ public class SessionData {
     public AuthenticationData getSession(String sessionId) {
         AuthenticationData aData = this.sessionData.get(sessionId);
         if (aData != null) {
-            if (aData.getLastAction().plusSeconds(expirationTime).isBefore(System.currentTimeMillis())) {
-                sessionData.remove(sessionId);
-                return null;
-            } else {
                 return aData;
-            }
         } else {
             return null;
+        }
+    }
+
+    @Scheduled(fixedRate = 5000)
+    public void checkSessions() {
+        System.out.println("Checking sessions");
+        Set<String> sessionsId = this.sessionData.keySet();
+        for (String sessionId : sessionsId) {
+            AuthenticationData aData = this.sessionData.get(sessionId);
+            if (aData.getLastAction().plusSeconds(expirationTime).isBefore(System.currentTimeMillis())) {
+                System.out.println("Deleting sessionId = " + sessionId);
+                this.sessionData.remove(sessionId);
+            }
         }
     }
 

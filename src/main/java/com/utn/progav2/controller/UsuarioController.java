@@ -4,6 +4,7 @@ import com.utn.progav2.converter.PersonaConverterInterface;
 import com.utn.progav2.entities.Persona;
 import com.utn.progav2.entities.Usuario;
 import com.utn.progav2.request.PersonaRequest;
+import com.utn.progav2.response.LoginResponseWrapper;
 import com.utn.progav2.response.PersonaWrapper;
 import com.utn.progav2.services.PersonaService;
 import com.utn.progav2.services.UsuarioService;
@@ -37,19 +38,19 @@ public class UsuarioController {
   @Autowired
   SessionData sessionData;
 
-  @RequestMapping("/login")
-  public @ResponseBody ResponseEntity<String> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd){
+  @RequestMapping(value = "/login", method = RequestMethod.POST)
+  public @ResponseBody ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd){
       Usuario u = usuarioService.login(nombreUsuario, pwd);
       if (null != u) {
         String sessionId = sessionData.addSession(u);
-        return new ResponseEntity<String>(sessionId, HttpStatus.OK);
+        return new ResponseEntity<LoginResponseWrapper>(new LoginResponseWrapper(sessionId), HttpStatus.OK);
       }
       return new ResponseEntity(HttpStatus.FORBIDDEN);
   }
 
 
   @RequestMapping("/logout")
-  public @ResponseBody ResponseEntity<String> getById(@RequestHeader("sessionid") String sessionId) {
+  public @ResponseBody ResponseEntity getById(@RequestHeader("sessionid") String sessionId) {
       sessionData.removeSession(sessionId);
       return new ResponseEntity(HttpStatus.ACCEPTED);
   }
