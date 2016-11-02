@@ -2,6 +2,7 @@ package com.utn.progav2.controller;
 
 import com.utn.progav2.converter.PersonaConverterInterface;
 import com.utn.progav2.entities.Persona;
+import com.utn.progav2.entities.Usuario;
 import com.utn.progav2.request.PersonaRequest;
 import com.utn.progav2.response.PersonaWrapper;
 import com.utn.progav2.services.PersonaService;
@@ -13,19 +14,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by pablo on 20/09/16.
  */
-@Profile("prod")
+
 @RestController
 @RequestMapping(
     value = "/api",
     produces = MediaType.APPLICATION_JSON_VALUE
 )
-public class PersonaController implements PersonaControllerInterface {
+public class PersonaController  {
 
 
   @Autowired
@@ -35,20 +37,20 @@ public class PersonaController implements PersonaControllerInterface {
   @Qualifier("uglyConverter")
   PersonaConverterInterface converter;
 
-  @RequestMapping("/persona/{id}")
-    public @ResponseBody ResponseEntity<PersonaWrapper> getById(@PathVariable("id") int id){
-    Persona per = personaService.getPersona(id);
-    if (per!=null) {
-      PersonaWrapper p = converter.convert(per);
-      return  new ResponseEntity<PersonaWrapper>(p,HttpStatus.OK);
-    } else {
-      return new ResponseEntity(HttpStatus.NOT_FOUND);
+    @RequestMapping("/persona/{id}")
+    public @ResponseBody ResponseEntity<PersonaWrapper> getById(@RequestHeader("usuario") String userName , @PathVariable("id") int id){
+      Persona per = personaService.getPersona(id);
+      if (per!=null) {
+        PersonaWrapper p = converter.convert(per);
+        return  new ResponseEntity<PersonaWrapper>(p,HttpStatus.OK);
+      } else {
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+      }
     }
-  }
 
   @RequestMapping("/persona/")
   public @ResponseBody  ResponseEntity<List<PersonaWrapper>> getAll() {
-    List<Persona> list = personaService.getAll();
+   List<Persona> list = personaService.getAll();
     if (list.size()>0) {
       return new ResponseEntity<List<PersonaWrapper>>(this.convertList(list), HttpStatus.OK);
     } else {
