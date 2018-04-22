@@ -39,7 +39,7 @@ public class PersonaDaoTest extends TestCase {
   SessionFactory sessionFactory;
   Session session;
   Query query;
-
+  //hola como te va
 
   @Before
   public void setUp() throws ParseException {
