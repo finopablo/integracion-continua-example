@@ -3,7 +3,6 @@ package com.utn.progav2.services;
 import com.utn.progav2.entities.Usuario;
 import com.utn.progav2.persistence.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,6 +20,6 @@ public class UsuarioService {
     }
 
     public Usuario login(String nombreUsuario, String password) {
-        return usuarioDao.get(nombreUsuario,password);
+        return usuarioDao.get(nombreUsuario, password);
     }
 }

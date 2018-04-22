@@ -1,13 +1,9 @@
 package com.utn.progav2.util;
 
 import com.utn.progav2.entities.Usuario;
-import groovy.util.logging.Slf4j;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
-import org.hibernate.id.GUIDGenerator;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +17,11 @@ import java.util.UUID;
 @Service
 public class SessionData {
 
-    final static Logger logger = Logger.getLogger(SessionData.class);
-    HashMap<String, AuthenticationData> sessionData;
+    static final  Logger LOGGER = Logger.getLogger(SessionData.class);
+    private HashMap<String, AuthenticationData> sessionData;
 
     @Value("${session.expiration}")
-    int expirationTime;
+    private int expirationTime;
 
 
     public SessionData() {
@@ -61,7 +57,8 @@ public class SessionData {
         Set<String> sessionsId = this.sessionData.keySet();
         for (String sessionId : sessionsId) {
             AuthenticationData aData = this.sessionData.get(sessionId);
-            if (aData.getLastAction().plusSeconds(expirationTime).isBefore(System.currentTimeMillis())) {
+            if (aData.getLastAction().plusSeconds(expirationTime).
+                    isBefore(System.currentTimeMillis())) {
                 System.out.println("Deleting sessionId = " + sessionId);
                 this.sessionData.remove(sessionId);
             }
@@ -69,3 +66,4 @@ public class SessionData {
     }
 
 }
+

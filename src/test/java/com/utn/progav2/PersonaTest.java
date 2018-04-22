@@ -42,7 +42,7 @@ public class PersonaTest  extends  TestCase {
       }
       @Test
       public void testEdad() {
-            assertEquals("Checking Getter Edad" , 36, persona.getEdad());
+            assertEquals("Checking Getter Edad" , 37, persona.getEdad());
       }
 
 }

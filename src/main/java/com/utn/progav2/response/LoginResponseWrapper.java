@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LoginResponseWrapper {
 
     @JsonProperty
-    String sessionId ;
+    private String sessionId;
 
 
     public LoginResponseWrapper() {
@@ -26,4 +26,5 @@ public class LoginResponseWrapper {
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
+
 }

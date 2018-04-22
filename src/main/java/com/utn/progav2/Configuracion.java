@@ -16,18 +16,18 @@ import org.springframework.context.annotation.Configuration;
 public class Configuracion {
 
     @Autowired
-    AuthFilter authFilter;
+    private AuthFilter authFilter;
 
     @Value("${date.format}")
-    String dateFormat;
+    private String dateFormat;
 
-    @Bean(name="normalConverter")
-    public PersonaConverterInterface getNormalConverter(){
+    @Bean(name = "normalConverter")
+    public PersonaConverterInterface getNormalConverter() {
         return  new PersonaConverter(dateFormat);
 
     }
 
-    @Bean(name="uglyConverter")
+    @Bean(name = "uglyConverter")
     public PersonaConverterInterface getUglyConverter() {
         return new PersonaUglyConverter(dateFormat);
 
@@ -41,4 +41,19 @@ public class Configuracion {
         return registration;
     }
 
+    public AuthFilter getAuthFilter() {
+        return authFilter;
+    }
+
+    public void setAuthFilter(AuthFilter authFilter) {
+        this.authFilter = authFilter;
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
+    }
 }

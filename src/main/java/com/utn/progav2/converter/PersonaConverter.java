@@ -2,18 +2,15 @@ package com.utn.progav2.converter;
 
 import com.utn.progav2.entities.Persona;
 import com.utn.progav2.response.PersonaWrapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 
 import java.text.SimpleDateFormat;
 
 /**
  * Created by pablo on 20/09/16.
- */
-public class PersonaConverter implements PersonaConverterInterface {
 
-    public String dateFormat;
+ */
+public class PersonaConverter extends PersonaConverterInterface {
 
     public PersonaConverter(String dateFormat) {
         this.dateFormat = dateFormat;
@@ -29,4 +26,11 @@ public class PersonaConverter implements PersonaConverterInterface {
         return p;
     }
 
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
+    }
 }

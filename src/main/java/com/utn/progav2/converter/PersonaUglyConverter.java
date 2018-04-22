@@ -2,9 +2,6 @@ package com.utn.progav2.converter;
 
 import com.utn.progav2.entities.Persona;
 import com.utn.progav2.response.PersonaWrapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 
@@ -13,12 +10,11 @@ import java.text.SimpleDateFormat;
  */
 
 
-public class PersonaUglyConverter implements PersonaConverterInterface {
+public class PersonaUglyConverter extends PersonaConverterInterface {
+
   public  PersonaUglyConverter(String dateFormat) {
     this.dateFormat = dateFormat;
   }
-
-  String dateFormat;
 
   public PersonaWrapper convert(Persona persona) {
     PersonaWrapper p = new PersonaWrapper();

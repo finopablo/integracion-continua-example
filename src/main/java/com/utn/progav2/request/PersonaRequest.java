@@ -1,7 +1,6 @@
 package com.utn.progav2.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by pablo on 20/09/16.

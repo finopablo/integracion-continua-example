@@ -14,8 +14,8 @@ public class Usuario {
     private String password;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id_usuario" , unique = true, nullable=false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_usuario", unique = true, nullable = false)
     public int getId() {
         return this.id;
     }
@@ -24,7 +24,7 @@ public class Usuario {
         this.id = id;
     }
 
-    @Column(name="nombre_usuario", nullable = false, length = 30)
+    @Column(name = "nombre_usuario", nullable = false, length = 30)
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -33,7 +33,7 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    @Column(name="password", nullable = false, length = 20)
+    @Column(name = "password", nullable = false, length = 20)
     public String getPassword() {
         return password;
     }

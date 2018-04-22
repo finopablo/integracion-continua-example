@@ -3,6 +3,7 @@ package com.utn.progav2;
 import com.utn.progav2.response.LoginResponseWrapper;
 import com.utn.progav2.response.PersonaWrapper;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by pablo on 02/11/16.
  */
+@Ignore
 public class RestClientIntegrationTest extends TestCase
 {
 

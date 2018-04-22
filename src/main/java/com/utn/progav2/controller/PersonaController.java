@@ -2,19 +2,17 @@ package com.utn.progav2.controller;
 
 import com.utn.progav2.converter.PersonaConverterInterface;
 import com.utn.progav2.entities.Persona;
-import com.utn.progav2.entities.Usuario;
+
 import com.utn.progav2.request.PersonaRequest;
 import com.utn.progav2.response.PersonaWrapper;
 import com.utn.progav2.services.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,47 +27,61 @@ import java.util.List;
 )
 public class PersonaController  {
 
+  private PersonaService personaService;
+  private PersonaConverterInterface converter;
 
   @Autowired
-  PersonaService personaService;
+  public PersonaController(PersonaService personaService, @Qualifier("uglyConverter") PersonaConverterInterface converter) {
+    this.personaService = personaService;
+   this.converter = converter;
+  }
 
-  @Autowired
-  @Qualifier("uglyConverter")
-  PersonaConverterInterface converter;
 
-    @RequestMapping("/persona/{id}")
-    public @ResponseBody ResponseEntity<PersonaWrapper> getById(@RequestHeader("usuario") String userName , @PathVariable("id") int id){
-      Persona per = personaService.getPersona(id);
-      if (per!=null) {
-        PersonaWrapper p = converter.convert(per);
-        return  new ResponseEntity<PersonaWrapper>(p,HttpStatus.OK);
-      } else {
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
-      }
+
+
+
+  @RequestMapping("/personas/{id}")
+  public @ResponseBody ResponseEntity<PersonaWrapper>
+  getById(@RequestHeader("usuario") String userName,
+          @PathVariable("id") int id) {
+    Persona per = personaService.getPersona(id);
+    if (per != null) {
+      PersonaWrapper p = converter.convert(per);
+      return  new ResponseEntity<PersonaWrapper>(p, HttpStatus.OK);
+    } else {
+      return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
+  }
 
-  @RequestMapping("/persona/")
-  public @ResponseBody  ResponseEntity<List<PersonaWrapper>> getAll() {
-   List<Persona> list = personaService.getAll();
-    if (list.size()>0) {
+  @RequestMapping("/personas/")
+  public @ResponseBody  ResponseEntity<List<PersonaWrapper>> getAll(
+          @RequestHeader("usuario") String usuario) {
+   //Con esto obtengo el usuario que pasamos por parametro en el RequestHeader
+    System.out.println(usuario);
+    List<Persona> list = personaService.getAll();
+    if (!list.isEmpty()) {
       return new ResponseEntity<List<PersonaWrapper>>(this.convertList(list), HttpStatus.OK);
     } else {
       return new ResponseEntity<List<PersonaWrapper>>(HttpStatus.NO_CONTENT);
     }
   }
 
-  @RequestMapping(value = "/persona", method = RequestMethod.GET)
-  public ResponseEntity<List<PersonaWrapper>> getBySurname(@RequestParam ("ape") String apellido) {
+  @RequestMapping(value = "/personas", method = RequestMethod.GET)
+  public ResponseEntity<List<PersonaWrapper>> getBySurname(
+          @RequestParam ("ape") String apellido) {
     List<Persona> list = personaService.getByApellido(apellido);
-    if (list.size()>0) {
+    if (!list.isEmpty()) {
       return new ResponseEntity<List<PersonaWrapper>>(this.convertList(list), HttpStatus.OK);
     } else {
       return new ResponseEntity<List<PersonaWrapper>>(HttpStatus.NO_CONTENT);
     }
   }
 
-  @RequestMapping(value = "/persona", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity addPersona(@RequestBody PersonaRequest request) {
+  @RequestMapping(value = "/personas",
+          method = RequestMethod.POST,
+          consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity addPersona(
+          @RequestBody PersonaRequest request) {
     try {
       personaService.newPersona(request.getNombre(), request.getApellido(), request.getFechaNacimiento());
       return new ResponseEntity(HttpStatus.CREATED);
@@ -79,7 +91,7 @@ public class PersonaController  {
   }
 
 
-  private List<PersonaWrapper> convertList(List<Persona> personas ){
+  private List<PersonaWrapper> convertList(List<Persona> personas) {
     List<PersonaWrapper> personaWrapperList = new ArrayList<PersonaWrapper>();
     for (Persona p : personas) {
       personaWrapperList.add(converter.convert(p));

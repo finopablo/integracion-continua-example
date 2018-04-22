@@ -1,7 +1,5 @@
 package com.utn.progav2.persistence;
 
-import com.utn.progav2.util.HibernateUtil;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
@@ -20,5 +18,7 @@ public abstract class AbstractDao<K> {
   abstract List<K> getAll();
   abstract K getById(int id);
   abstract void save(K value);
+
+
 
 }

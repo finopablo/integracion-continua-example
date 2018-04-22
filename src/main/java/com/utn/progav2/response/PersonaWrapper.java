@@ -2,7 +2,6 @@ package com.utn.progav2.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
 
 /**
  * Created by pablo on 20/09/16.

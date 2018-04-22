@@ -1,12 +1,10 @@
 package com.utn.progav2.persistence;
 
 import com.utn.progav2.entities.Persona;
-import com.utn.progav2.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public class PersonaDao extends  AbstractDao<Persona> {
       return personas;
   }
 
-  public void save(Persona p ) {
+  public void save(Persona p) {
     Session session = this.sessionFactory.openSession();
     Transaction t = session.beginTransaction();
     session.save(p);
@@ -49,7 +47,7 @@ public class PersonaDao extends  AbstractDao<Persona> {
 
   public List<Persona> getBySurname(String surname) {
     Session session = this.sessionFactory.openSession();
-    List<Persona> list = session.createQuery("FROM Persona where Apellido = :ape").setParameter("ape",surname).list();
+    List<Persona> list = session.createQuery("FROM Persona where Apellido = :ape").setParameter("ape", surname).list();
     session.close();
     return list;
   }

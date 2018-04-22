@@ -1,12 +1,5 @@
 package com.utn.progav2;
 
-import java.io.IOException;
-import java.util.*;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 
 import com.utn.progav2.util.AuthenticationData;
 import com.utn.progav2.util.SessionData;
@@ -15,11 +8,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Enumeration;
+import java.util.Collections;
+
 @Service
 public class AuthFilter extends OncePerRequestFilter {
 
     @Autowired
-    SessionData sessionData;
+    private SessionData sessionData;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -33,8 +38,16 @@ public class AuthFilter extends OncePerRequestFilter {
             requestWrapper.addHeader("usuario", data.getUsuario().getNombreUsuario());
             filterChain.doFilter(requestWrapper, response);
         } else {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setStatus(HttpStatus.FORBIDDEN.value());
         }
+    }
+
+    public SessionData getSessionData() {
+        return sessionData;
+    }
+
+    public void setSessionData(SessionData sessionData) {
+        this.sessionData = sessionData;
     }
 
     public class HeaderMapRequestWrapper extends HttpServletRequestWrapper {
@@ -90,5 +103,5 @@ public class AuthFilter extends OncePerRequestFilter {
         }
 
     }
-
 }
+
